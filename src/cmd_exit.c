@@ -21,17 +21,24 @@ void	cmd_exit(t_stg *settings, char *full_cmd, char *cmd, char **cmds)
 {
 	char	**split;
 	int		type;
+	int		len;
 
 	type = 1;
 	split = 0;
 	if (!(split = ft_strsplit(full_cmd, ' ')))
 		notes('g', 1, 0, 0);
-	if (split)
-		type = split[1] ? ft_atoi(split[1]) : 1;
-	free_settings(settings);
-	if (split)
-		ft_free_strsplit(&split);
-	free_str(&cmd);
-	ft_free_strsplit(&cmds);
-	exit(type);
+	len = ft_strsplit_len(split);
+	if (len < 3)
+	{
+		if (split)
+			type = split[1] ? ft_atoi(split[1]) : 1;
+		free_settings(settings);
+		if (split)
+			ft_free_strsplit(&split);
+		free_str(&cmd);
+		ft_free_strsplit(&cmds);
+		exit(type);
+	}
+	else
+		ft_printf("exit: too many arguments\n");
 }
